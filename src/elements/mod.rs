@@ -13,6 +13,7 @@ mod script;
 mod select;
 mod style;
 mod table;
+mod ul;
 
 pub use a::A;
 pub use body::Body;
@@ -29,6 +30,7 @@ pub use script::Script;
 pub use select::{Select, SelectOption};
 pub use style::Style;
 pub use table::{Table, Td, Tr};
+pub use ul::{Li, Ul};
 
 use crate::render::Render;
 
@@ -53,6 +55,7 @@ pub enum HtmlElement {
     Script(Script),
     ComponentList(Vec<HtmlElement>),
     Style(Style),
+    Ul(Ul),
 }
 
 impl Render for HtmlElement {
@@ -77,6 +80,7 @@ impl Render for HtmlElement {
             HtmlElement::Script(script) => script.render(),
             HtmlElement::Style(style) => style.render(),
             HtmlElement::ComponentList(ls) => ls.render(),
+            HtmlElement::Ul(ul) => ul.render(),
         }
     }
 }
