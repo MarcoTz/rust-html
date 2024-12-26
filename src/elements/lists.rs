@@ -14,6 +14,12 @@ pub struct Ul {
     pub items: Vec<Li>,
 }
 
+#[derive(Debug, PartialEq)]
+pub struct Ol {
+    pub attributes: Vec<Attribute>,
+    pub items: Vec<Li>,
+}
+
 impl Render for Li {
     fn render(&self) -> String {
         let attr_str = self.attributes.render();
@@ -21,6 +27,7 @@ impl Render for Li {
         format!("<li {attr_str}>{content_str}</li>")
     }
 }
+
 impl Render for Ul {
     fn render(&self) -> String {
         let attr_str = self.attributes.render();
@@ -29,8 +36,22 @@ impl Render for Ul {
     }
 }
 
+impl Render for Ol {
+    fn render(&self) -> String {
+        let attr_str = self.attributes.render();
+        let li_strs: Vec<String> = self.items.iter().map(|item| item.render()).collect();
+        format!("<ol {attr_str}>\n\t{}\n</ol>", li_strs.join("\n\t"))
+    }
+}
+
 impl From<Ul> for HtmlElement {
     fn from(ul: Ul) -> HtmlElement {
         HtmlElement::Ul(ul)
+    }
+}
+
+impl From<Ol> for HtmlElement {
+    fn from(ol: Ol) -> HtmlElement {
+        HtmlElement::Ol(ol)
     }
 }

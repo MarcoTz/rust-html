@@ -8,12 +8,12 @@ mod headline;
 mod img;
 mod input;
 mod link;
+mod lists;
 mod literal;
 mod script;
 mod select;
 mod style;
 mod table;
-mod ul;
 
 pub use a::A;
 pub use body::Body;
@@ -25,12 +25,12 @@ pub use headline::{HeaderSize, Headline};
 pub use img::Img;
 pub use input::Input;
 pub use link::Link;
+pub use lists::{Li, Ol, Ul};
 pub use literal::Literal;
 pub use script::Script;
 pub use select::{Select, SelectOption};
 pub use style::Style;
 pub use table::{Table, Td, Tr};
-pub use ul::{Li, Ul};
 
 use crate::render::Render;
 
@@ -56,6 +56,7 @@ pub enum HtmlElement {
     ComponentList(Vec<HtmlElement>),
     Style(Style),
     Ul(Ul),
+    Ol(Ol),
 }
 
 impl Render for HtmlElement {
@@ -81,6 +82,7 @@ impl Render for HtmlElement {
             HtmlElement::Style(style) => style.render(),
             HtmlElement::ComponentList(ls) => ls.render(),
             HtmlElement::Ul(ul) => ul.render(),
+            HtmlElement::Ol(ol) => ol.render(),
         }
     }
 }
